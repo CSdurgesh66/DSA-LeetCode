@@ -7,7 +7,7 @@ class Solution {
           char ch = s.charAt(r);
           hash[ch-'A']++;
           maxF = Math.max(maxF,hash[ch-'A']);
-          while((r-l+1) - maxF > k){
+          if((r-l+1) - maxF > k){
             hash[s.charAt(l)-'A']--;
             maxF = 0;
             for(int i=0;i<26;i++) maxF = Math.max(maxF,hash[i]);
