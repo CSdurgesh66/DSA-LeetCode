@@ -7,14 +7,30 @@ class Solution {
     }
     public void moveZeroes(int[] nums) {
         int n = nums.length;
-        int i=0, j=0;
-        while(i<n-1 && j<n){
-            if(nums[j]!=0){
-                swap(nums,i,j);
-                i++;
-                j++;
+        int p=0;
+        boolean flag = true;
+        int zeroes = 0;
+        for(int j=0;j<n;j++){
+            if(nums[j]==0){
+                if(flag){
+                    p = j;
+                    flag = false;
+                }
+                zeroes++;
+              
             }
-            else j++;
+        }
+        if(zeroes==0) return;
+        int i = p+1;
+        while(i<n){
+            if(nums[i]!=0){
+                nums[p] = nums[i];
+                p++;
+                i++;
+            } else i++;
+        }
+        for(int k=n-1;k>=n-zeroes;k--){
+            nums[k] = 0;
         }
     }
 }
