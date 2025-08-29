@@ -6,9 +6,9 @@ class Solution {
         for(int val:nums){
           hash[val+offset]++;
         }
-        for(int i=0;i<hash.length;i++){
-            if(hash[i]==1){
-                return i-offset;
+        for(int val:nums){
+            if(hash[val+offset]==1){
+                return val;
             }
         }
         return -1;
