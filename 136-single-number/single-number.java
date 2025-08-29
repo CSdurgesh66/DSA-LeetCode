@@ -1,16 +1,10 @@
 class Solution {
     public int singleNumber(int[] nums) {
         int n = nums.length;
-        int offset = 30000;
-        int[] hash = new int[60001];
+        int xor = 0;
         for(int val:nums){
-          hash[val+offset]++;
+            xor=xor^val;
         }
-        for(int val:nums){
-            if(hash[val+offset]==1){
-                return val;
-            }
-        }
-        return -1;
+        return xor;
     }
 }
