@@ -1,23 +1,34 @@
 class Solution {
-    public void merge(int[] nums1, int m, int[] nums2, int n) {
-      int[] ans = new int[m+n];
-      int i=0 , j = 0 , k=0;
-      while(i<m && j<n){
-        if(nums1[i]<nums2[j]){
-            ans[k++] = nums1[i++];
-        }else {
-            ans[k++] = nums2[j++]; 
+    public void swap(int[] arr, int i, int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    public void rightPosition(int[] arr){
+        for(int i=1;i<arr.length;i++){
+            if(arr[i-1]>arr[i]){
+                swap(arr,i-1,i);
+            }
         }
-      }
-      while(i<m){
-        ans[k++] = nums1[i++];
-      }
-       while(j<n){
-        ans[k++] = nums2[j++];
-      }
-      int l = 0;
-      for(int val:ans){
-        nums1[l++] = val;
-      }
+    }
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        
+        int i = 0;
+        int x = 0;
+        while(i<m && x<n){
+            if(nums1[i]<=nums2[x]){
+                i++;
+            }else if(nums1[i]>nums2[x]) {
+                int temp=nums1[i];
+                nums1[i] = nums2[x];
+                nums2[x] = temp;
+                i++;
+                rightPosition(nums2);
+            }
+        }
+        
+        while(i<nums1.length && x<n){
+            nums1[i++] = nums2[x++];
+        }
     }
 }
