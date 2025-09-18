@@ -1,7 +1,7 @@
 class Solution {
     public boolean isIsomorphic(String s, String t) {
         int lens = s.length();
-        int lent = s.length();
+        int lent = t.length();
         if(lens!= lent) return false;
         HashMap<Character,Character> map = new HashMap<>();
 
