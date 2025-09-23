@@ -1,13 +1,10 @@
 class Solution {
     public int singleNonDuplicate(int[] nums) {
-        HashSet<Integer> set = new HashSet<>();
-        for(int val:nums){
-            if(set.contains(val)) set.remove(val);
-            else set.add(val);
+        int n = nums.length;
+        int xor = nums[0];
+        for(int i=1;i<n;i++){
+            xor ^= nums[i]; 
         }
-       for(int val:set){
-        return val;
-       }
-       return 0;
+        return xor;
     }
 }
