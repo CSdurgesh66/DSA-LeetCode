@@ -5,13 +5,11 @@ class Solution {
         int min = Integer.MAX_VALUE;
         while (low <= high) {
             int mid = low + (high - low)/2;
-            if(nums[low] <= nums[mid]) { // means this half is sorted
-               min = Math.min(min,Math.min(nums[low],nums[mid]));
-               low = mid + 1;
-               
-            }else { // means right half is sorted
-              min = Math.min(min,nums[mid]);
-              high = mid - 1;
+            min = Math.min(min,nums[mid]);
+            if(nums[mid] > nums[high]){ // means this is unsorted part , and min is always present in the unsorted part
+             low = mid + 1;
+            }else {
+                high = mid - 1;
             }
         }
         return min;
