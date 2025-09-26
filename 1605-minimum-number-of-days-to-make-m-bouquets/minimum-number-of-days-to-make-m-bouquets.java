@@ -1,44 +1,27 @@
 class Solution {
     public boolean helper(int[] bloomDay, int m, int k, int day){
         int n = bloomDay.length;
-        boolean[] mark = new boolean[n];
-        for(int i=0;i<n;i++){
-            if(bloomDay[i]<=day){
-                mark[i] = true;
+        int count = 0 , bouquets = 0;
+        for(int bloom : bloomDay){
+            if(bloom<=day){
+                count++;
+                if(count==k){
+                    bouquets++;
+                    count = 0;
+                }
+            }else {
+                count = 0;
             }
         }
-
-        ArrayList<Integer> grp = new ArrayList<>();
-        int cnt = 0;
-        for(int i=0;i<n;i++){
-            if(mark[i]){
-                cnt++;
-            }else{
-                grp.add(cnt);
-                cnt = 0;
-            } 
-        }
-        grp.add(cnt);
-
-        int total = 0;
-        for(Integer val:grp){
-            total +=  val/k;
-        }
-        if(total>=m) return true;
-        return false;
+        return bouquets >= m;
     }
     public int minDays(int[] bloomDay, int m, int k) {
         int n = bloomDay.length;
+        if(n < m*k) return -1;
         int max = 0;
         for(int val:bloomDay){
             max = Math.max(max,val);
         }
-
-        // for(int day=1;day<=max;day++){
-        //     if(helper(bloomDay,m,k,day)){
-        //         return day;
-        //     }
-        // }
         int low = 1 , high = max;
         int ans = -1;
         while(low<=high){
