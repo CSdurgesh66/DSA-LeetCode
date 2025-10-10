@@ -20,7 +20,7 @@ class Solution {
             int left = mid - 1 >=0 ? mat[maxRowIndex][mid-1]:-1;
             int right = mid + 1 <m ? mat[maxRowIndex][mid+1]:-1;
 
-            if(mat[maxRowIndex][mid]>left & mat[maxRowIndex][mid]>right){
+            if(mat[maxRowIndex][mid]>left && mat[maxRowIndex][mid]>right){
                 return new int[]{maxRowIndex,mid};
             }else if(mat[maxRowIndex][mid] < left){
                 high = mid - 1;
