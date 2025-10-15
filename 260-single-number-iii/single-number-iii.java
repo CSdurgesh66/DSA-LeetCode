@@ -1,21 +1,20 @@
 class Solution {
     public int[] singleNumber(int[] nums) {
-       int res =0;
-    for(int i=0;i<nums.length;i++){
-        res ^= nums[i];
-    }
-    int diff = res&-res;
-    int a=0;
-    int b=0;
-    for(int x:nums){
-        if((x&diff) !=0){
-            a ^=x;
+        int xor = 0;
+        for(int num:nums){
+            xor = xor^num;
         }
-        else{
-            b ^= x;
+        System.out.println(xor);
+        int rightMostBit = (xor &(xor-1)) ^ xor;
+        System.out.println(rightMostBit);
+        int b1 = 0 , b2 = 0;
+        for(int i=0;i<nums.length;i++){
+            if((nums[i] & rightMostBit) != 0){
+                b1 = b1 ^ nums[i];
+            }else {
+                b2 = b2 ^ nums[i];
+            }
         }
-    }
-
-    return new int[]{a,b}; 
+        return new int[]{b1,b2};
     }
 }
