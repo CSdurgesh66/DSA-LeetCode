@@ -4,9 +4,7 @@ class Solution {
         for(int num:nums){
             xor = xor^num;
         }
-        System.out.println(xor);
         int rightMostBit = (xor &(xor-1)) ^ xor;
-        System.out.println(rightMostBit);
         int b1 = 0 , b2 = 0;
         for(int i=0;i<nums.length;i++){
             if((nums[i] & rightMostBit) != 0){
