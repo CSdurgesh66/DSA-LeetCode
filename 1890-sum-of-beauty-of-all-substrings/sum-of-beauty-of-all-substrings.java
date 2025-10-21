@@ -1,13 +1,8 @@
 class Solution {
-    public int beautyF(String s){
-        int[] hash = new int[26];
-        Arrays.fill(hash,-1);
-        for(int i=0;i<s.length();i++){
-            hash[s.charAt(i)-'a']++;
-        }
+    public int beautyF(int[] hash){
         int max = 0, min = Integer.MAX_VALUE;
         for(int i=0;i<26;i++){
-            if(hash[i]!=-1){
+            if(hash[i]>0){
             max = Math.max(max,hash[i]);
             min = Math.min(min,hash[i]);
             }   
@@ -18,10 +13,10 @@ class Solution {
         int n = s.length();
         int total = 0;
         for(int i=0;i<n;i++){
-            StringBuilder sb = new StringBuilder();
+             int[] hash = new int[26];
             for(int j=i;j<n;j++){
-               sb.append(s.charAt(j));
-               int beauty = beautyF(sb.toString());
+               hash[s.charAt(j)-'a']++;
+               int beauty = beautyF(hash);
                total += beauty;
             }
         }
