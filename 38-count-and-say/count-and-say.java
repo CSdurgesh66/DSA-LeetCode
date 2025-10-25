@@ -1,28 +1,21 @@
 class Solution {
     public StringBuilder create(StringBuilder s){
-        int curr = 0, prev= 0;
-        int count = 0;
         StringBuilder sb = new StringBuilder();
-        while(curr<s.length()){
-            if(s.charAt(curr)==s.charAt(prev)){
-                curr++;
+        int count = 1;
+        for(int i=1;i<s.length();i++){
+            if(s.charAt(i)==s.charAt(i-1)){
                 count++;
-            }else{
-                sb.append(count);
-                sb.append(s.charAt(prev));
-                prev = curr;
-                count = 0;
+            }else {
+                sb.append(count).append(s.charAt(i-1));
+                count = 1;
             }
         }
-        sb.append(count);
-        sb.append(s.charAt(prev));
-
+        sb.append(count).append(s.charAt(s.length()-1));
         return sb;
     }
     public String countAndSay(int n) {
-       if(n==1) return "1";
        StringBuilder res =new StringBuilder("1");
-       for(int i=2;i<=n;i++){
+       for(int i=1;i<n;i++){
          res = create(res);
        }
        
