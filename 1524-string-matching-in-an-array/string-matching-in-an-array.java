@@ -1,16 +1,13 @@
 class Solution {
     public List<String> stringMatching(String[] words) {
         List<String> ans = new ArrayList<>();
-        int n = words.length;
+        String combined = String.join("#",words) + "#";
 
-        for(int i=0;i<n;i++){
-            String word = words[i];
-            for(int j=0;j<n;j++){
-                if(i==j) continue;
-                if(words[j].indexOf(word)!= -1){
-                    ans.add(words[i]);
-                    break;
-                }
+        for(String word:words){
+            int first = combined.indexOf(word);
+            int last = combined.lastIndexOf(word);
+            if(first!=last){
+                ans.add(word);
             }
         }
         return ans;
