@@ -13,67 +13,39 @@
  *     }
  * }
  */
-
-class Pair {
-    int value;
-    TreeNode Node;
-
-    Pair(int value, TreeNode Node) {
-        this.value = value;
-        this.Node = Node;
-    }
-}
-
 class Solution {
-    public void buildTree(TreeNode root, String s,int  i) {
-        Stack<Pair> st = new Stack<>();
-        int count = 0;
-        TreeNode curr = root;
-        while (i < s.length()) {
-            if (s.charAt(i) == '-') {
-                count++;
-            } else {
-                String str = "";
-                while (i < s.length() && s.charAt(i) != '-') {
-                    str += s.charAt(i);
-                    i++;
-                }
-                i--;
-                TreeNode node = new TreeNode(Integer.parseInt(str));
-                boolean exist = false;
-                for (Pair it : st) {
-                    if (it.value == count) {
-                        exist = true;
-                        break;
-                    }
-                }
-                if (exist == true) {
-                    while (st.peek().value != count) {
-                        st.pop();
-                    }
-                    Pair it = st.pop();
-                    curr = it.Node;
-                    curr.right = node;
-                } else {
-                    st.push(new Pair(count, curr));
-                    curr.left = node;
-                }
-                count = 0;
-                curr = node;
+    public TreeNode recoverFromPreorder(String s) {
+        Stack<TreeNode> st = new Stack<>();
+        int i = 0 , n = s.length(); 
+        while(i<n){
+            int depth = 0;
+            while(i<n && s.charAt(i) == '-'){
+                depth++;
+                i++;
             }
-            i++;
-        }
-    }
 
-    public TreeNode recoverFromPreorder(String traversal) {
-        String str = "";
-        int i = 0;
-        while (i < traversal.length() && traversal.charAt(i) != '-') {
-            str += traversal.charAt(i);
-            i++;
+            int value = 0;
+            while(i<n && Character.isDigit(s.charAt(i))){
+                value = value * 10 + (s.charAt(i) - '0');
+                i++;
+            }
+
+            TreeNode node = new TreeNode(value);
+            while(st.size() > depth){
+                st.pop();
+            }
+
+            if(!st.isEmpty()){
+                TreeNode parent = st.peek();
+                if(parent.left==null){
+                    parent.left = node;
+                }else{
+                    parent.right = node;
+                }
+            }
+            st.push(node);
         }
-        TreeNode root = new TreeNode(Integer.parseInt(str));
-        buildTree(root, traversal,i);
-        return root;
+
+        return st.firstElement();
     }
 }
