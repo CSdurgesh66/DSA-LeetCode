@@ -12,7 +12,7 @@ class Solution {
                     List<Integer> list = new ArrayList<>(Arrays.asList(nums[i],nums[j],nums[k]));
                     ans.add(list);
                     while(j<k && nums[j]==nums[j+1]) j++;
-                    while(j<k && nums[j]==nums[j+1]) k++;
+                    while(j<k && nums[k]==nums[k-1]) k--;
                     j++;
                     k--;
                 }else if(sum<0){
