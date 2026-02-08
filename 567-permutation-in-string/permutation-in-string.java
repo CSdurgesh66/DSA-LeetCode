@@ -1,30 +1,44 @@
 class Solution {
-    public boolean checkInclusion(String s1, String s2) {
-        if (s1.length() > s2.length()) return false;
-        int[] freq1 = new int[26];
-        int[] freq2 = new int[26];
-        for (char c : s1.toCharArray()) {
-            freq1[c - 'a']++;
-        }
-        int windowSize = s1.length();
-        for (int i = 0; i < windowSize; i++) {
-            freq2[s2.charAt(i) - 'a']++;
-        }
-        if (matches(freq1, freq2)) return true;
-        for (int i = windowSize; i < s2.length(); i++) {
-            freq2[s2.charAt(i) - 'a']++;                
-            freq2[s2.charAt(i - windowSize) - 'a']--;
 
-            if (matches(freq1, freq2)) return true;
+    public boolean checkInclusion(String s1, String s2) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        int l = 0;
+        int n1 = s1.length();
+
+        for (int r = 0; r < s2.length(); r++) {
+            
+            char rc = s2.charAt(r);
+            map.put(rc, map.getOrDefault(rc, 0) + 1);
+            
+            if (r - l + 1 > n1) {
+                char lc = s2.charAt(l);
+                map.put(lc, map.get(lc) - 1);
+                if (map.get(lc) == 0) {
+                    map.remove(lc);
+                }
+                l++;
+            }
+            if (r - l + 1 == n1) {
+                HashMap<Character, Integer> temp = new HashMap<>(map);
+                boolean matched = true;
+                for (int i = 0; i < s1.length(); i++) {
+                    char ch = s1.charAt(i);
+
+                    if (!temp.containsKey(ch)) {
+                        matched = false;
+                        break;
+                    }
+
+                    temp.put(ch, temp.get(ch) - 1);
+                    if (temp.get(ch) == 0) {
+                        temp.remove(ch);
+                    }
+                }
+
+                if (matched) return true;
+            }
         }
 
         return false;
-    }
-
-    private boolean matches(int[] a, int[] b) {
-        for (int i = 0; i < 26; i++) {
-            if (a[i] != b[i]) return false;
-        }
-        return true;
     }
 }
