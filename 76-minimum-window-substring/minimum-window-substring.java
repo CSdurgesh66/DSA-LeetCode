@@ -1,39 +1,46 @@
 class Solution {
     public String minWindow(String s, String t) {
-        int slen = s.length(), tlen = t.length();
+        int ns = s.length();
+        int nt = t.length();
+        if(ns<nt) return "";
+        HashMap<Character,Integer> tmap = new HashMap<>();
+        for(char ch:t.toCharArray()){
+            tmap.put(ch,tmap.getOrDefault(ch,0)+1);
+        }
+
+         HashMap<Character,Integer> smap = new HashMap<>();
+        int min = Integer.MAX_VALUE;
         String ans = "";
-        // if(slen==0 || tlen==0) return ans;
-        // if((slen==tlen) && s.equals(t)) return t;
-        int sIndex = -1;
-        int minlen = Integer.MAX_VALUE;
+        int l=0 , r=0;
+        int startIndex = 0;
         int cnt = 0;
-        int[] hash = new int[256];
-        for(int j=0;j<tlen;j++){
-            hash[t.charAt(j)]++;
-        } 
-        int l =0, r = 0;
-        while(r<slen){
+        while(r<ns){
+            
             char ch = s.charAt(r);
-            if(hash[ch]>0) {
+            smap.put(ch,smap.getOrDefault(ch,0)+1);
+
+            if(tmap.containsKey(ch) && smap.get(ch) <= tmap.get(ch)){
                 cnt++;
             }
-            hash[ch]--;
-            while(cnt==tlen){
-               if(r-l+1 < minlen){
-                  minlen = r-l+1;
-                  sIndex = l;
+
+            while(cnt==t.length()){
+
+                if(r-l+1 < min){
+                    min = r-l+1;
+                    startIndex = l;
                 }
-                hash[s.charAt(l)]++;
-                if(hash[s.charAt(l)]>0){
+
+                char leftChar = s.charAt(l);
+                smap.put(leftChar, smap.get(leftChar) - 1);
+
+                if(tmap.containsKey(leftChar) && smap.get(leftChar) < tmap.get(leftChar)){
                     cnt--;
                 }
                 l++;
+
             }
             r++;
         }
-        if(sIndex>=0){
-            ans = s.substring(sIndex,sIndex+minlen);
-        }
-        return ans;
+        return  min == Integer.MAX_VALUE ? "" : s.substring(startIndex,startIndex+min);
     }
 }
