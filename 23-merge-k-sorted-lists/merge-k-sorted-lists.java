@@ -9,47 +9,32 @@
  * }
  */
 class Solution {
-    public ListNode merge(ListNode A,ListNode B){
-        ListNode curr = new ListNode(100);
-        ListNode head = curr;
-
-        while(A!=null && B!=null){
-            if(A.val < B.val){
-                curr.next = A;
-                A = A.next;
-                curr = curr.next;
-            }else {
-                curr.next = B;
-                B = B.next;
-                curr = curr.next;
-            }
-        }
-
-        while(A!=null){
-            curr.next = A;
-            A = A.next;
-            curr = curr.next;
-        }
-
-        
-        while(B!=null){
-            curr.next = B;
-            B= B.next;
-            curr = curr.next;
-        }
-
-        return head.next;
-    }
     public ListNode mergeKLists(ListNode[] lists) {
         int n = lists.length;
         ListNode ans = null;
-        if(n==0) return ans;
-        ListNode A = lists[0];
-        for(int i=1;i<n;i++){
-            ListNode B = lists[i];
+        if(lists == null || n == 0) return ans;
 
-            A = merge(A,B);
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((a,b) -> a.val - b.val);
+
+        for(ListNode node:lists){
+            if(node!=null) pq.add(node);
         }
-        return A;
+
+        ListNode curr = new ListNode(100);
+        ListNode head = curr;
+
+        while(!pq.isEmpty()){
+            ListNode minNode = pq.poll();
+
+            curr.next = minNode;
+            curr = curr.next;
+            minNode = minNode.next;
+            if(minNode!=null){
+                pq.add(minNode);
+            }
+        }
+
+      
+        return head.next;
     }
 }
