@@ -25,17 +25,11 @@ class Solution {
             }
         }
 
-        while(A!=null){
+        if(A!=null){
             curr.next = A;
-            A = A.next;
-            curr = curr.next;
         }
-
-        
-        while(B!=null){
+        if(B!=null){
             curr.next = B;
-            B= B.next;
-            curr = curr.next;
         }
 
         return head.next;
