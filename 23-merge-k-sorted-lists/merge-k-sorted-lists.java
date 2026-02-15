@@ -45,7 +45,6 @@ class Solution {
         ListNode ans = null;
         if(n==0) return ans;
         ListNode A = lists[0];
-        if(A==null && n==1) return ans;
         for(int i=1;i<n;i++){
             ListNode B = lists[i];
 
