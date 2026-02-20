@@ -14,56 +14,37 @@ class Node {
 */
 
 class Solution {
-    public int findPos(Node rand,Node head) {
-        int i=0;
-        Node curr = head;
-        while(curr!=null){
-            if(curr==rand) return i;
-            curr = curr.next;
-            i++;
-        }
-
-        return 0;
-
-    }
-    public void randomTraverse(Node node,Node rand,Node head,Node chead){
-
-        if(rand==null){
-            node.random = null;
-        }else{
-           int pos = findPos(rand,head);
-           Node temp = chead;
-            while(pos>0){
-            temp = temp.next;
-            pos--;
-           }
-           node.random = temp;
-        } 
-
-    }
     public Node copyRandomList(Node head) {
-        Node ccurr = new Node(100);
-        Node chead = ccurr;
 
         Node curr = head;
-        
+
         while(curr!=null){
-            Node temp = new Node(curr.val);
-            ccurr.next = temp;
-            ccurr = ccurr.next;
-            curr = curr.next;
+            Node copy = new Node(curr.val);
+            copy.next = curr.next;
+            curr.next = copy;
+            curr = copy.next;
         }
 
         curr = head;
-        ccurr = chead.next;
-
         while(curr!=null){
-            Node rand = curr.random;
-            randomTraverse(ccurr,rand,head,chead.next);
-            ccurr = ccurr.next;
-            curr = curr.next;
+            if(curr.random!=null){
+                curr.next.random = curr.random.next;
+            }
+            curr = curr.next.next;
         }
 
-        return chead.next;
+
+        Node temp = new Node(100);
+        Node copycurr = temp;
+        curr = head;
+        while(curr!=null){
+            Node copy = curr.next;
+            copycurr.next = copy;
+            copycurr = copy;
+            curr.next = copy.next;
+            curr = curr.next;
+        }
+        return temp.next;
+        
     }
 }
