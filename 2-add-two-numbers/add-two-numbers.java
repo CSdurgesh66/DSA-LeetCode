@@ -18,44 +18,18 @@ class Solution {
         ListNode temp = head;
 
         int carry = 0;
-        while (curr1 != null && curr2 != null) {
-            int sum = curr1.val + curr2.val + carry;
+        while (curr1 != null || curr2 != null || carry != 0) {
+
+            int val1 = (curr1 != null) ? curr1.val : 0;
+            int val2 = (curr2 != null) ? curr2.val : 0;
+
+            int sum = val1 + val2 + carry;
             carry = sum / 10;
-            int rem = sum % 10;
-
-            ListNode node = new ListNode(rem);
-
-            temp.next = node;
-
+            temp.next = new ListNode(sum % 10);
             temp = temp.next;
-            curr1 = curr1.next;
-            curr2 = curr2.next;
-
-        }
-
-        while (curr1 != null) {
-            int sum = carry + curr1.val;
-            carry = sum / 10;
-            int rem = sum % 10;
-            temp.next = new ListNode(rem);
-
-            temp = temp.next;
-            curr1 = curr1.next;
-        }
-
-        while (curr2 != null) {
-            int sum = carry + curr2.val;
-            carry = sum / 10;
-            int rem = sum % 10;
-            temp.next = new ListNode(rem);
-
-            temp = temp.next;
-            curr2 = curr2.next;
-
-        }
-
-        if (carry == 1) {
-            temp.next = new ListNode(carry);
+            
+            if(curr1!=null) curr1 = curr1.next;
+            if(curr2!=null) curr2 = curr2.next;
         }
 
         return head.next;
