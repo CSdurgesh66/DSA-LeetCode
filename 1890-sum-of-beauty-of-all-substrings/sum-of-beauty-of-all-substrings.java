@@ -1,25 +1,23 @@
 class Solution {
-    public int beautyF(int[] hash){
-        int max = 0, min = Integer.MAX_VALUE;
-        for(int i=0;i<26;i++){
-            if(hash[i]>0){
-            max = Math.max(max,hash[i]);
-            min = Math.min(min,hash[i]);
-            }   
-        }
-        return max-min;
-    }
     public int beautySum(String s) {
         int n = s.length();
-        int total = 0;
-        for(int i=0;i<n;i++){
-             int[] hash = new int[26];
-            for(int j=i;j<n;j++){
-               hash[s.charAt(j)-'a']++;
-               int beauty = beautyF(hash);
-               total += beauty;
+        int total = 0;  
+        for (int i = 0; i < n - 1; i++) {
+            int[] freq = new int[26];
+            for (int j = i; j < n; j++) {
+                freq[s.charAt(j) - 'a']++;
+                int max = 0;
+                int min = Integer.MAX_VALUE;
+
+                for (int k = 0; k < 26; k++) {
+                    if (freq[k] > 0) {
+                        max = Math.max(max, freq[k]);
+                        min = Math.min(min, freq[k]);
+                    }
+                } total += max-min;
             }
         }
+
         return total;
     }
 }
